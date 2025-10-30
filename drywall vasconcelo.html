@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drywell Vasconcelos</title>
+    
+    <style>
+        /* --- ESTILOS GERAIS E RESET --- */
+        :root {
+            --cor-principal: #007bff; /* Azul primário */
+            --cor-secundaria: #0056b3; /* Azul mais escuro para hover */
+            --cor-fundo: #f4f4f4;
+            --cor-texto: #333;
+            --cor-clara: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--cor-texto);
+            background-color: var(--cor-fundo);
+        }
+
+        a {
+            color: var(--cor-principal);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--cor-secundaria);
+            text-decoration: underline;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
+        }
+
+        section {
+            padding: 40px 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        /* --- ESTILO DO HEADER E LOGO --- */
+        #home {
+            background: var(--cor-principal);
+            color: var(--cor-clara);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #home h1 {
+            color: var(--cor-clara);
+            margin-bottom: 5px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 10px auto;
+            border: 4px solid var(--cor-clara);
+            object-fit: cover;
+        }
+
+        /* --- ESTILO DA NAVEGAÇÃO --- */
+        nav {
+            background: var(--cor-secundaria);
+            text-align: center;
+            padding: 10px 0;
+            /* Mantém o menu fixo no topo ao rolar */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: var(--cor-clara);
+            padding: 10px 15px;
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--cor-principal);
+            text-decoration: none;
+        }
+
+        /* --- SEÇÃO DE SERVIÇOS --- */
+        #servicos h2, #galeria h2, #contato h2, #depoimentos h2, #sobre h2, #faq h2 {
+            border-bottom: 2px solid var(--cor-principal);
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .servicos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--cor-clara);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1 1 280px; /* Cresce e encolhe, base de 280px */
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--cor-principal);
+            margin-bottom: 10px;
+        }
+
+        /* --- SEÇÃO DE GALERIA --- */
+        .galeria-imagens {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .galeria-item {
+            background: var(--cor-clara);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .legenda {
+            padding: 10px;
+            font-size: 0.9em;
+            text-align: center;
+            background-color: #eee;
+        }
+
+        /* --- SEÇÃO DE CONTATO --- */
+        #contato {
+            background: var(--cor-fundo);
+            padding: 40px 20px;
+        }
+
+        #contato p {
+            margin: 10px 0;
+        }
+
+        .botao {
+            display: inline-block;
+            background-color: #25d366; /* Cor do WhatsApp */
+            color: var(--cor-clara);
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #128c7e;
+            text-decoration: none;
+        }
+
+        /* --- CARROSSEL DE DEPOIMENTOS --- */
+        #depoimentos {
+            background: #e9e9e9;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            width: 80%;
+            max-width: 700px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%; /* Garante que cada slide ocupe a largura total do container */
+            padding: 30px;
+            background: var(--cor-clara);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .cliente-nome {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--cor-principal);
+            font-style: normal;
+        }
+
+        .carousel-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .carousel-buttons button {
+            background: var(--cor-principal);
+            color: var(--cor-clara);
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-buttons button:hover {
+            background: var(--cor-secundaria);
+        }
+
+        /* --- SEÇÃO FAQ (ACORDEÃO) --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-pergunta {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--cor-clara);
+            color: var(--cor-texto);
+            text-align: left;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-pergunta::after {
+            content: '+';
+            font-size: 1.5em;
+            font-weight: normal;
+            transition: transform 0.3s;
+        }
+
+        .faq-pergunta.ativo {
+            background-color: #f0f0f0;
+            color: var(--cor-principal);
+        }
+
+        .faq-pergunta.ativo::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .faq-resposta {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--cor-clara);
+            padding: 0 15px;
+        }
+
+        .faq-resposta p {
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--cor-secundaria);
+            color: var(--cor-clara);
+            margin-top: 30px;
+        }
+
+        /* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            nav a {
+                display: block;
+                padding: 10px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .servicos {
+                flex-direction: column;
+            }
+
+            .card {
+                flex: 1 1 100%;
+            }
+            
+            .carousel-container {
+                width: 100%;
+                border-radius: 0;
+            }
+        }
+    </style>
+    </head>
+<body>
+    <header id="home">
+        <h1>Drywell Vasconcelos</h1> 
+        <img src="https://i.ibb.co/VYxSF4Pc/imagem-6.png" alt="Logo Drywell Vasconcelos" class="logo">
+        <p>Especialista em Drywall e Soluções para Interiores</p>
+    </header>
+
+    <nav>
+        <a href="#home">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#contato">Contato</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#sobre">Sobre Nós</a>
+        <a href="faq">FAQ</a>
+    </nav>
+
+    <section id="servicos">
+        <h2>Nossos Serviços em Drywall</h2>
+        <div class="servicos">
+            <div class="card">
+                <h3>Divisórias Drywall</h3>
+                <p>Criamos novas divisões de ambientes com Drywall, seja para um escritório, um quarto extra ou qualquer espaço. O Drywall oferece isolamento térmico e acústico, além de uma instalação rápida e limpa.</p>
+            </div>
+            <div class="card">
+                <h3>Forros Drywall</h3>
+                <p>Ideal para esconder imperfeições, tubulações ou para criar um visual moderno com projeto de iluminação. Nossos forros são de Drywall e são perfeitos para residências e espaços comerciais.</p>
+            </div>
+            <div class="card">
+                <h3>Detalhes em Drywall</h3>
+                <p>A beleza está nos detalhes! Adicionamos molduras e outros detalhes em Drywall para dar um toque de sofisticação e valorizar a decoração do ambiente. Transforme um teto simples em uma obra de arte.</p>
+            </div>
+            <div class="card">
+                <h3>Soluções Acústicas Drywall</h3>
+                <p>Tenha ambientes mais silenciosos e tranquilos. Nossas soluções de isolamento acústico são feitas com Drywall, perfeitas para estúdios, home offices ou apartamentos, garantindo conforto e privacidade.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria">
+        <h2>Galeria de Projetos Drywall</h2>
+        <div class="galeria-imagens">
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/TDb06qHc/imagem-1.jpg" alt="Projeto de Detalhes de Drywall e Iluminação">
+                <p class="legenda">Instalação de detalhes modernos em Drywall com iluminação LED.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/1hQ6bK5/imagem-2.jpg" alt="Divisória de Drywall para Escritório">
+                <p class="legenda">Divisória de ambiente com parede de Drywall e porta.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/23nYTLXh/imagem-3.jpg" alt="Forro Drywall em Sala">
+                <p class="legenda">Forro Drywall com detalhes e pintura para sala.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/Z6NRfb1r/imagem-4.jpg" alt="Acabamento de Drywall em Quarto">
+                <p class="legenda">Acabamento em Drywall no teto de um quarto.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/gbc0YP3Q/imagem-5.jpg" alt="Instalação de Forro Acústico Drywall">
+                <p class="legenda">Instalação de forro Drywall para isolamento acústico em estúdio.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+        <h2>Fale Conosco</h2>
+        <p style="text-align:center;">Entre em contato e solicite seu orçamento:</p>
+        <p style="text-align:center;">
+            📞 <a href="tel:+553191155727">+55 31 9115-5727</a><br>
+            📧 <a href="mailto:contato@drywellvasconcelos.com.br">contato@drywellvasconcelos.com.br</a><br><br>
+            <a href="https://wa.me/553191155727" target="_blank" class="botao">Whatsapp</a>
+        </p>
+    </section>
+    
+    <section id="depoimentos">
+        <h2>Depoimentos de Clientes</h2>
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="carousel-slide">
+                    <p>"A Drywell Vasconcelos superou minhas expectativas! O trabalho foi rápido, limpo e o resultado final ficou impecável."</p>
+                    <p class="cliente-nome">- Ana L.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"Profissionais de confiança e com um Drywall perfeito. Recomendo para todos os meus amigos e família."</p>
+                    <p class="cliente-nome">- João M.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"Atendimento de primeira, do orçamento à finalização. O projeto em Drywall ficou exatamente como eu imaginei!"</p>
+                    <p class="cliente-nome">- Maria S.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"A equipe é extremamente competente e pontual. Fiquei impressionado com a qualidade do serviço Drywall e o cuidado com a limpeza após o trabalho."</p>
+                    <p class="cliente-nome">- Bernardo Ferreira</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"O Drywell transformou meu espaço de forma criativa e com soluções que eu nem imaginava. O detalhe de Drywall ficou maravilhoso!"</p>
+                    <p class="cliente-nome">- Lorrany Gontijo</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"Serviço de alta qualidade! A divisória em Drywall ficou perfeita, e o isolamento acústico funcionou muito bem."</p>
+                    <p class="cliente-nome">- David Victor</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"A Drywell Vasconcelos é sinônimo de excelência. Profissionais dedicados e o resultado em Drywall foi além do esperado."</p>
+                    <p class="cliente-nome">- Decleane Chaves</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"Fui muito bem atendida. O Daniel e sua equipe foram muito prestativos e o resultado final em Drywall ficou muito lindo!"</p>
+                    <p class="cliente-nome">- Júlia Araújo</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"A equipe de instalação de forro Drywall foi muito atenciosa e o serviço ficou impecável, sem sujeira e muito bem feito."</p>
+                    <p class="cliente-nome">- Daniel Luiz</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"Trabalho impecável e atendimento de primeira. O Drywell é um artista do Drywall!"</p>
+                    <p class="cliente-nome">- Carolina S.</p>
+                </div>
+                <div class="carousel-slide">
+                    <p>"A reforma do meu escritório foi rápida e sem dor de cabeça. A divisória em Drywall deu um toque profissional e moderno."</p>
+                    <p class="cliente-nome">- Gabriel B.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-buttons">
+            <button id="prevBtn">Anterior</button>
+            <button id="nextBtn">Próximo</button>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2>Sobre Nós</h2>
+        <p>A Drywell Vasconcelos nasceu da paixão do nosso fundador, Drywell, por transformar ambientes de forma rápida e com um resultado perfeito. Com mais de uma década de dedicação e experiência em Drywall, nossa missão é simples: oferecer soluções inteligentes e de alta qualidade para o seu projeto, seja ele grande ou pequeno. Nossa equipe é composta por profissionais dedicados que compartilham o mesmo compromisso com a excelência e a satisfação do cliente. Na Drywell Vasconcelos, construímos mais do que paredes e forros — construímos confiança.</p>
+    </section>
+
+    <section id="faq">
+        <h2>Perguntas Frequentes (FAQ) sobre Drywall</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-pergunta">O Drywall é resistente à água ou umidade?</button>
+                <div class="faq-resposta">
+                    <p>Sim, mas depende do tipo de placa. Para áreas úmidas (banheiros, cozinhas, lavanderias), utilizamos placas de Drywall resistentes à umidade (placas verdes). Elas possuem aditivos que protegem contra a ação da água, garantindo a durabilidade do seu projeto.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-pergunta">Quanto peso uma parede de Drywall suporta?</button>
+                <div class="faq-resposta">
+                    <p>O Drywall suporta muito peso. Para objetos leves (quadros, espelhos), buchas comuns funcionam. Para pesos médios (armários, prateleiras), usamos buchas específicas para Drywall. Para pesos pesados (TVs de tela grande, bancadas), fixamos diretamente nos perfis internos da estrutura metálica, suportando mais de 50kg por ponto.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-pergunta">A instalação de Drywall faz muita sujeira?</button>
+                <div class="faq-resposta">
+                    <p>Não! Uma das grandes vantagens do Drywall é a **instalação limpa e rápida**. A poeira gerada é mínima, especialmente em comparação com alvenaria tradicional. Nossa equipe se compromete a manter a área de trabalho organizada.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-pergunta">O Drywall tem bom isolamento acústico e térmico?</button>
+                <div class="faq-resposta">
+                    <p>Sim. O Drywall, por si só, já oferece um bom isolamento. Para projetos que exigem maior conforto (estúdios, home offices), utilizamos lã de vidro ou lã de rocha no interior das paredes e forros, maximizando a barreira acústica e o isolamento térmico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Drywell Vasconcelos - Todos os Direitos Reservados.</p>
+    </footer>
+
+    <script>
+        // JavaScript do Carrossel de Depoimentos
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('#nextBtn');
+        const prevButton = document.querySelector('#prevBtn');
+        
+        let currentSlide = 0;
+
+        const updateTrackPosition = () => {
+             if (!slides || slides.length === 0) return; 
+
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            track.style.transform = 'translateX(-' + slideWidth * currentSlide + 'px)';
+        };
+
+        if (nextButton && prevButton && track) { // Verifica se os elementos existem
+            nextButton.addEventListener('click', e => {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                } else {
+                    currentSlide = 0; // Loop: volta para o primeiro
+                }
+                updateTrackPosition();
+            });
+
+            prevButton.addEventListener('click', e => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                } else {
+                    currentSlide = slides.length - 1; // Loop: vai para o último
+                }
+                updateTrackPosition();
+            });
+
+            window.addEventListener('resize', updateTrackPosition);
+            window.addEventListener('load', updateTrackPosition);
+            setTimeout(updateTrackPosition, 100);
+        }
+
+        // JavaScript do FAQ (Acordeão)
+        const perguntas = document.querySelectorAll('.faq-pergunta');
+
+        perguntas.forEach(pergunta => {
+            pergunta.addEventListener('click', () => {
+                const resposta = pergunta.nextElementSibling;
+                
+                // Fecha todas as outras respostas abertas
+                perguntas.forEach(otherPergunta => {
+                    if (otherPergunta !== pergunta && otherPergunta.classList.contains('ativo')) {
+                        otherPergunta.classList.remove('ativo');
+                        otherPergunta.nextElementSibling.style.maxHeight = 0;
+                    }
+                });
+
+                // Abre ou fecha a resposta clicada
+                pergunta.classList.toggle('ativo');
+                
+                if (pergunta.classList.contains('ativo')) {
+                    // Abre a resposta
+                    resposta.style.maxHeight = resposta.scrollHeight + "px";
+                } else {
+                    // Fecha a resposta
+                    resposta.style.maxHeight = 0;
+                }
+            });
+        });
+    </script>
+    </body>
+</html>
