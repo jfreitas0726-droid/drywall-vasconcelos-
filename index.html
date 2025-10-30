@@ -13,6 +13,8 @@
             --cor-fundo: #f4f4f4;
             --cor-texto: #333;
             --cor-clara: #ffffff;
+            --tablet-breakpoint: 1024px;
+            --mobile-breakpoint: 600px;
         }
 
         * {
@@ -72,12 +74,11 @@
             object-fit: cover;
         }
 
-        /* --- ESTILO DA NAVEGAÇÃO --- */
+        /* --- ESTILO DA NAVEGAÇÃO (PC/PADRÃO) --- */
         nav {
             background: var(--cor-secundaria);
             text-align: center;
             padding: 10px 0;
-            /* Mantém o menu fixo no topo ao rolar */
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -97,8 +98,8 @@
             text-decoration: none;
         }
 
-        /* --- SEÇÃO DE SERVIÇOS --- */
-        #servicos h2, #galeria h2, #contato h2, #depoimentos h2, #sobre h2, #faq h2 {
+        /* --- SEÇÃO DE TÍTULOS E LINHAS --- */
+        #servicos h2, #galeria h2, #contato h2, #depoimentos h2, #sobre h2, #faq h2, #tecnologia h2 {
             border-bottom: 2px solid var(--cor-principal);
             padding-bottom: 10px;
             display: inline-block;
@@ -106,6 +107,7 @@
             margin-right: auto;
         }
 
+        /* --- SEÇÃO DE SERVIÇOS --- */
         .servicos {
             display: flex;
             flex-wrap: wrap;
@@ -119,7 +121,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            flex: 1 1 280px; /* Cresce e encolhe, base de 280px */
+            flex: 1 1 280px; /* PC: 4 cards por linha se houver espaço */
             text-align: center;
             transition: transform 0.3s;
         }
@@ -133,10 +135,10 @@
             margin-bottom: 10px;
         }
 
-        /* --- SEÇÃO DE GALERIA --- */
+        /* --- SEÇÃO DE GALERIA E TECNOLOGIA (IMAGENS) --- */
         .galeria-imagens {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* PC/Tablet: Mínimo 250px por imagem */
             gap: 15px;
             margin-top: 30px;
         }
@@ -165,6 +167,25 @@
             font-size: 0.9em;
             text-align: center;
             background-color: #eee;
+        }
+        
+        /* --- ESTILO DA SEÇÃO DE TECNOLOGIA (TEXTO) --- */
+        #tecnologia .texto-vantagens {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--cor-clara);
+            border-left: 5px solid var(--cor-principal);
+            border-radius: 4px;
+        }
+        
+        #tecnologia .texto-vantagens p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        #tecnologia h3 {
+            margin-top: 25px;
+            color: var(--cor-secundaria);
         }
 
         /* --- SEÇÃO DE CONTATO --- */
@@ -200,7 +221,7 @@
 
         .carousel-container {
             overflow: hidden;
-            width: 80%;
+            width: 90%; 
             max-width: 700px;
             margin: 20px auto;
             border-radius: 10px;
@@ -213,7 +234,7 @@
         }
 
         .carousel-slide {
-            min-width: 100%; /* Garante que cada slide ocupe a largura total do container */
+            min-width: 100%; 
             padding: 30px;
             background: var(--cor-clara);
             text-align: center;
@@ -316,25 +337,70 @@
             margin-top: 30px;
         }
 
-        /* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
-        @media (max-width: 768px) {
-            nav a {
-                display: block;
-                padding: 10px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* ==================================== */
+        /* --- MEDIA QUERIES PARA TABLETS (até 1024px) --- */
+        /* ==================================== */
+        @media (max-width: var(--tablet-breakpoint)) {
+            .servicos {
+                /* Em tablets, mostra 2 cards por linha */
+                gap: 15px;
             }
 
+            .card {
+                flex: 1 1 calc(50% - 15px); /* Dois cards por linha com espaço */
+                min-width: 300px;
+            }
+
+            .galeria-imagens {
+                /* Em tablets, mostra 2 ou 3 imagens por linha */
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .carousel-container {
+                width: 95%; /* Usa mais espaço na tela do tablet */
+            }
+        }
+
+
+        /* ==================================== */
+        /* --- MEDIA QUERIES PARA CELULARES (até 600px) --- */
+        /* ==================================== */
+        @media (max-width: var(--mobile-breakpoint)) {
+            /* Navegação Vira Vertical (Tipo Menu 'Hamburguer' Simples) */
+            nav {
+                padding: 0;
+            }
+            nav a {
+                display: block;
+                padding: 15px 10px;
+                border-bottom: 1px solid var(--cor-principal);
+                width: 100%;
+            }
+            
+            /* Serviços e Cards (1 por linha no celular) */
             .servicos {
                 flex-direction: column;
+                gap: 15px;
             }
 
             .card {
                 flex: 1 1 100%;
             }
             
-            .carousel-container {
-                width: 100%;
-                border-radius: 0;
+            /* Galerias e Imagens (1 por linha no celular) */
+            .galeria-imagens {
+                grid-template-columns: 1fr; /* Apenas 1 imagem por linha */
+            }
+            
+            /* Contato */
+            #contato p {
+                font-size: 1em;
+            }
+
+            /* FAQ */
+            .faq-pergunta {
+                font-size: 0.9em;
             }
         }
     </style>
@@ -349,11 +415,12 @@
     <nav>
         <a href="#home">Início</a>
         <a href="#servicos">Serviços</a>
+        <a href="#tecnologia">Tecnologia</a>
         <a href="#galeria">Galeria</a>
         <a href="#contato">Contato</a>
         <a href="#depoimentos">Depoimentos</a>
         <a href="#sobre">Sobre Nós</a>
-        <a href="faq">FAQ</a>
+        <a href="#faq">FAQ</a>
     </nav>
 
     <section id="servicos">
@@ -378,6 +445,45 @@
         </div>
     </section>
 
+    <section id="tecnologia">
+        <h2>Tecnologia Drywall: Por Que Escolher?</h2>
+        <div class="texto-vantagens">
+            <h3>A Revolução da Construção a Seco: Drywall Vasconcelos</h3>
+            <p>O Drywall não é apenas uma parede; é um sistema de construção inteligente que transforma seu espaço com **rapidez e precisão**. Ele substitui a alvenaria tradicional em ambientes internos e permite a criação de designs únicos, como paredes curvas, armários embutidos (shafts) e divisórias.</p>
+
+            <h3>Como Funciona e Por Que é Melhor:</h3>
+            <p>Nossas paredes de Drywall são montadas sobre uma **estrutura de aço galvanizado** leve e resistente. Entre as placas de gesso acartonado, é possível adicionar materiais como lã de vidro ou lã mineral, garantindo um **excelente isolamento térmico e acústico**.</p>
+            
+            <h3>Principais Vantagens:</h3>
+            <ul>
+                <li>**Obras Limpas e Rápidas:** Diga adeus à "quebradeira"! As instalações elétricas e hidráulicas são facilmente feitas através dos perfis, reduzindo drasticamente o tempo de obra e a sujeira.</li>
+                <li>**Durabilidade e Segurança:** Com o reforço adequado (que nós garantimos), você pode fixar com segurança bancadas, armários suspensos, televisores e até barras de apoio para acessibilidade.</li>
+                <li>**Manutenção sem Estresse:** Se um reparo for necessário, ele é realizado de forma pontual e simples. A Drywell garante que a manutenção seja discreta e que o resultado final volte a ser impecável.</li>
+                <li>**Sustentabilidade:** Além de rápido e limpo, o Drywall é a escolha ecologicamente correta, pois o gesso e o aço são materiais totalmente recicláveis.</li>
+            </ul>
+            <p style="font-weight: bold; margin-top: 20px;">Escolher Drywell Vasconcelos é escolher inovação, agilidade e um acabamento superior para o seu projeto.</p>
+        </div>
+        
+        <h3>O Processo em Imagens</h3>
+        <div class="galeria-imagens">
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/cSy5wyJ6/imagem-9.jpg" alt="Estrutura metálica de aço galvanizado para Drywall">
+                <p class="legenda">Montagem da Estrutura Metálica: A base leve e segura para a parede ou forro.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/d0LMm683/imagem-10.jpg" alt="Teto de Drywall com detalhes de iluminação e claraboia">
+                <p class="legenda">Criação de Nichos e Detalhes: Parede com recortes horizontais prontos para receber acabamento.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/ndcsFgN/imagem-11.jpg" alt="Detalhes de nichos e recortes em Drywall">
+                <p class="legenda">Forro com Detalhe: Placas de Drywall instaladas no teto, demonstrando a fase de acabamento.</p>
+            </div>
+            <div class="galeria-item">
+                <img src="https://i.ibb.co/XkK6r9yz/imagem-12.jpg" alt="Vedação em Drywall com recortes decorativos">
+                <p class="legenda">Design e Estrutura: Paredes e nichos em Drywall, evidenciando a versatilidade antes da pintura final.</p>
+            </div>
+        </div>
+    </section>
     <section id="galeria">
         <h2>Galeria de Projetos Drywall</h2>
         <div class="galeria-imagens">
